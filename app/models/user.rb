@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
          before_validation :group_key_to_id, if: :has_group_key?
 
          belongs_to :group
-         has_many :questions
-         has_many :answers
+         has_many :questions, ->{ order("created_at DESC")}
+         has_many :answers, ->{ order("updated_at DESC")}
          has_many :answered_questions, through: :answers, source: :question
 
          def self.find_first_by_auth_conditions(warden_conditions)
